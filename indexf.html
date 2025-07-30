@@ -1,0 +1,721 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous" />
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+  <script src="https://kit.fontawesome.com/ac42c3b1f7.js" crossorigin="anonymous"></script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Netflix Clone</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      background: #141414;
+      color: #fff;
+    }
+
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px;
+      background-color: rgba(0, 0, 0, 0.8);
+    }
+
+    .img-logo {
+      background: url('https://upload.wikimedia.org/wikipedia/commons/0/08/Netflix_2015_logo.svg') no-repeat center;
+      background-size: contain;
+      width: 120px;
+      height: 40px;
+    }
+
+    .signin-button {
+      background: #e50914;
+      color: #fff;
+      border: none;
+      padding: 8px 18px;
+      border-radius: 4px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    .bg-container {
+      background: url('https://github.com/g-wtham/Netflix-Clone/blob/main/images/netflix-background-home.jpg?raw=true') center/cover no-repeat;
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      text-align: center;
+      padding: 0 20px;
+    }
+
+    .card-container {
+      background-color: rgba(0, 0, 0, 0.75);
+      padding: 40px 30px;
+      border-radius: 8px;
+      max-width: 700px;
+      width: 100%;
+    }
+
+    .card-heading {
+      font-size: 2.5rem;
+      margin-bottom: 18px;
+    }
+
+    .passage-1-heading,
+    .passage-text {
+      font-size: 1.2rem;
+      margin-bottom: 12px;
+    }
+
+    .form {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 10px;
+    }
+
+    .form input[type="email"] {
+      padding: 12px;
+      font-size: 1rem;
+      border: none;
+      border-radius: 4px;
+      flex: 1;
+      min-width: 250px;
+    }
+
+    .form button {
+      background: #e50914;
+      color: #fff;
+      border: none;
+      padding: 12px 20px;
+      border-radius: 4px;
+      font-size: 1rem;
+      cursor: pointer;
+    }
+
+    .detailed-bg-container {
+      background-color: #181818;
+      padding: 30px 15px;
+      min-height: 100vh;
+    }
+
+    .movie-category {
+      max-width: 1200px;
+      margin: 0 auto 40px;
+    }
+
+    .movie-category h2 {
+      margin-bottom: 12px;
+    }
+
+    .movie-card {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 15px;
+    }
+
+    .movie-img {
+      background-color: #444;
+      background-size: cover;
+      background-position: center;
+      width: 160px;
+      height: 90px;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: transform 0.2s, border 0.2s;
+    }
+
+    .movie-img:hover {
+      transform: scale(1.05);
+      border: 2px solid #e50914;
+    }
+
+    .btn-primary {
+      display: block;
+      background: #e50914;
+      color: #fff;
+      border: none;
+      padding: 12px 24px;
+      border-radius: 4px;
+      font-size: 1rem;
+      cursor: pointer;
+      margin: 40px auto 0;
+    }
+
+    @media (max-width: 600px) {
+      .movie-img {
+        width: 100%;
+        height: 140px;
+      }
+    }
+    /* Extra styles for detail page */
+    .section {
+      position: relative;
+      width: 100%;
+      min-height: 100vh;
+      background-size: cover;
+      background-position: center;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 40px 20px;
+    }
+
+    .overlay {
+      background: linear-gradient(to top, rgba(0, 0, 0, 0.8) 30%, rgba(0, 0, 0, 0));
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      z-index: 1;
+    }
+
+    .content {
+      position: relative;
+      z-index: 2;
+      max-width: 700px;
+    }
+
+    .content h1.h1 {
+      font-size: 20px;
+      color: #e50914;
+      margin-bottom: 10px;
+    }
+
+    .movie-title {
+      font-size: 36px;
+      font-weight: bold;
+    }
+
+    .passage {
+      font-size: 14px;
+      margin: 10px 0;
+    }
+
+    .movie-description {
+      font-size: 16px;
+      margin-bottom: 15px;
+    }
+
+    .info-button-1,
+    .info-button-2 {
+      padding: 10px 20px;
+      margin-right: 10px;
+      border: none;
+      border-radius: 4px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+
+    .info-button-1 {
+      background: white;
+      color: black;
+    }
+
+    .info-button-1:hover {
+      background: #e5e5e5;
+    }
+
+    .info-button-2 {
+      background: rgba(109, 109, 110, 0.7);
+      color: white;
+    }
+
+    .info-button-2:hover {
+      background: rgba(109, 109, 110, 0.4);
+    }
+
+    .bottom-card {
+      background: rgba(0, 0, 0, 0.6);
+      padding: 20px;
+      margin-top: 30px;
+      border-radius: 10px;
+      max-width: 400px;
+    }
+
+    .h2 {
+      font-size: 18px;
+      margin-bottom: 5px;
+    }
+
+    .h3 {
+      font-size: 16px;
+      margin-bottom: 10px;
+    }
+
+    .p3 {
+      font-size: 14px;
+    }
+
+    .separator {
+      height: 20px;
+      background: linear-gradient(to top, #000 0%, transparent 100%);
+    }
+
+    @media (max-width: 768px) {
+      .movie-title {
+        font-size: 28px;
+      }
+
+      .content {
+        padding: 10px;
+      }
+
+      .bottom-card {
+        width: 100%;
+      }
+    }
+  </style>
+  <script>
+    function display(sectionId) {
+      document.getElementById('sectionhomepage').style.display = 'none';
+      document.getElementById('sectionnetflixdetailedpage').style.display = 'none';
+      document.getElementById('sectionwelcometoeden').style.display = 'none';
+      document.getElementById('sectionstrangerthings').style.display = 'none';
+      document.getElementById('sectionlucifer').style.display = 'none';
+      document.getElementById('sectionthemarkedheart').style.display = 'none';
+      document.getElementById('sectionthesneakerella').style.display = 'none';
+      if (document.getElementById(sectionId)) {
+        document.getElementById(sectionId).style.display = 'block';
+      }
+    }
+    window.onload = function() {
+      display('sectionhomepage');
+    }
+  </script>
+</head>
+
+<body>
+  <div id="sectionhomepage">
+    <header>
+      <div class="img-logo"></div>
+      <nav style="display: flex; align-items: center; gap: 24px;">
+      <a href="#" style="color: #fff; text-decoration: none; font-size: 16px; margin-right: 10px; transition: color 0.2s;">Home</a>
+      <a href="#" style="color: #fff; text-decoration: none; font-size: 16px; margin-right: 10px; transition: color 0.2s;">TV Shows</a>
+      <a href="#" style="color: #fff; text-decoration: none; font-size: 16px; margin-right: 10px; transition: color 0.2s;">Movies</a>
+      <a href="#" style="color: #fff; text-decoration: none; font-size: 16px; margin-right: 10px; transition: color 0.2s;">New & Popular</a>
+      <a href="#" style="color: #fff; text-decoration: none; font-size: 16px; transition: color 0.2s;">My List</a>
+      <input type="text" placeholder="Search" style="margin-left:18px; padding:6px 12px; border-radius:4px; border:none; font-size:15px; background:#222; color:#fff; width:120px;">
+      <button class="signin-button" style="margin-left:18px;">Login</button>
+      </nav>
+    </header>
+    <div class="bg-container">
+      <div class="card-container">
+        <h1 class="card-heading">Unlimited movies, TV shows, and more</h1>
+        <p class="passage-1-heading">Watch anywhere. Cancel anytime.</p>
+        <p class="passage-text">Ready to watch? Enter your email to create or restart your membership.</p>
+        <div class="form">
+          <input type="email" placeholder="Email address">
+          <button onclick="display('sectionnetflixdetailedpage')">Get Started</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="sectionnetflixdetailedpage" style="display: none;">
+    <header>
+      <div class="img-logo"></div>
+    </header>
+    <div class="detailed-bg-container overlay-bg">
+      <!-- Netflix Originals -->
+      <div class="movie-category">
+        <h2 class="category-title"><i class="fas fa-crown" style="color:#e50914;"></i> Netflix Originals</h2>
+        <div class="movie-card enhanced-movie-card">
+          <div onclick="display('sectionwelcometoeden')" class="movie-img enhanced-movie-img" style="background-image: url('https://th.bing.com/th/id/OIP.k-p3kLmKT5NQ_JNTW5En5QAAAA');">
+            <div class="movie-overlay">
+              <span class="movie-title-mini">Welcome To Eden</span>
+            </div>
+          </div>
+          <div onclick="display('sectionstrangerthings')" class="movie-img enhanced-movie-img" style="background-image: url('https://th.bing.com/th/id/OIP.ZRb2Hn4fheDoNDUsuL4wfgHaHa');">
+            <div class="movie-overlay">
+              <span class="movie-title-mini">Stranger Things</span>
+            </div>
+          </div>
+          <div onclick="display('sectionlucifer')" class="movie-img enhanced-movie-img" style="background-image: url('https://th.bing.com/th/id/OIP.DstsXSc0r-XtDxJi9USRfwHaLH');">
+            <div class="movie-overlay">
+              <span class="movie-title-mini">Lucifer</span>
+            </div>
+          </div>
+          <div onclick="display('sectionthesneakerella')" class="movie-img enhanced-movie-img" style="background-image: url('https://th.bing.com/th/id/OIP.pf6Oi0pLaSKBlbjqDC5TGQHaFj');">
+            <div class="movie-overlay">
+              <span class="movie-title-mini">Sneakerella</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Trending Now -->
+      <div class="movie-category">
+        <h2 class="category-title"><i class="fas fa-fire" style="color:#e50914;"></i> Trending Now</h2>
+        <div class="movie-card enhanced-movie-card">
+          <div class="movie-img enhanced-movie-img" style="background-image: url('https://th.bing.com/th/id/OIP.N2d6-TBajGKFMiCkjsSg5AHaK9');">
+            <div class="movie-overlay">
+              <span class="movie-title-mini">Extraction</span>
+            </div>
+          </div>
+          <div class="movie-img enhanced-movie-img" style="background-image: url('https://th.bing.com/th/id/OIP.TcxL_Mvy3VsrYYthRf4V3gHaLH');">
+            <div class="movie-overlay">
+              <span class="movie-title-mini">Money Heist</span>
+            </div>
+          </div>
+          <div class="movie-img enhanced-movie-img" style="background-image: url('https://th.bing.com/th/id/OIP.Usx2zE3F0Gbuifsw5wLlrgHaK-');">
+            <div class="movie-overlay">
+              <span class="movie-title-mini">Dark</span>
+            </div>
+          </div>
+          <div class="movie-img enhanced-movie-img" style="background-image: url('https://th.bing.com/th/id/OIP.iR9rmssflhJwmqEtu3B8gAHaJ2');">
+            <div class="movie-overlay">
+              <span class="movie-title-mini">The Witcher</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Horror Movies -->
+      <div class="movie-category">
+        <h2 class="category-title"><i class="fas fa-ghost" style="color:#e50914;"></i> Horror Movies</h2>
+        <div class="movie-card enhanced-movie-card">
+          <div class="movie-img enhanced-movie-img" style="background-image: url('https://th.bing.com/th/id/OIP.wRrh_biYR_xkAiHCn4HePgHaK9');">
+            <div class="movie-overlay">
+              <span class="movie-title-mini">Bird Box</span>
+            </div>
+          </div>
+          <div class="movie-img enhanced-movie-img" style="background-image: url('https://th.bing.com/th/id/OIP.PJu3OKEsLTg2bWJxf1jmogHaLH');">
+            <div class="movie-overlay">
+              <span class="movie-title-mini">The Ritual</span>
+            </div>
+          </div>
+          <div class="movie-img enhanced-movie-img" style="background-image: url('https://th.bing.com/th/id/OIP.9ysG5KipGUyuvkd_EOLj-QHaLH');">
+            <div class="movie-overlay">
+              <span class="movie-title-mini">Fear Street</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Comedy Shows -->
+      <div class="movie-category">
+        <h2 class="category-title"><i class="fas fa-laugh" style="color:#e50914;"></i> Comedy Shows</h2>
+        <div class="movie-card enhanced-movie-card">
+          <div class="movie-img enhanced-movie-img" style="background-image: url('https://occ-0-3216-2186.1.nflxso.net/dnm/api/v6/Qs00mKCpRvrkl3HZAN5KwEL1kpE/AAAABSaxW7HqP8BldNO2q-jw9IpV0TUDjtjUmhXvK8nKLXcepLsdypyTzzB5QQqNL6Ow8crexz9qWkKeP9lVBcVPC3fb374Gui5CEC8.jpg?r=7dd');">
+            <div class="movie-overlay">
+              <span class="movie-title-mini">Brooklyn 99</span>
+            </div>
+          </div>
+          <div class="movie-img enhanced-movie-img" style="background-image: url('https://occ-0-3216-2186.1.nflxso.net/dnm/api/v6/Qs00mKCpRvrkl3HZAN5KwEL1kpE/AAAABdNo-Hn7Qr2mZbFwZ0EIWwIU5988uFR-Mwh-idg6LviNuteiHdFVjBo4CsbzESVT77OWZqWSBq4frTnAcEokMD0MVJNTNkL69O8.jpg?r=833');">
+            <div class="movie-overlay">
+              <span class="movie-title-mini">The Good Place</span>
+            </div>
+          </div>
+          <div class="movie-img enhanced-movie-img" style="background-image: url('https://occ-0-3216-2186.1.nflxso.net/dnm/api/v6/Qs00mKCpRvrkl3HZAN5KwEL1kpE/AAAABWeoe5MRywgu-Q3j0RcnNpv8Yra1fz0IRuS1hUIvLjnM7DtZRaYiHtCLv84fn4urQxIXtSvcMG0RumGKYZ6AJQOHDCS4aQyVe_XHqsPsMX3GywA_ZvJ9AeK1c49d21H-qZ8p.jpg?r=5b0');">
+            <div class="movie-overlay">
+              <span class="movie-title-mini">Friends</span>
+            </div>
+          </div>
+          <div class="movie-img enhanced-movie-img" style="background-image: url('https://occ-0-3216-2186.1.nflxso.net/dnm/api/v6/Qs00mKCpRvrkl3HZAN5KwEL1kpE/AAAABXLfSsm5Qg5AoW0aWtWNKD1nvDSQu5nTwVBtGoSe3ArhNVqBhZ2xxQ24YElZC2zQv_ent-5pGfWUhGaNauGVbUN5KPudShwchz8.jpg?r=941');">
+            <div class="movie-overlay">
+              <span class="movie-title-mini">The Office</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <button class="btn-primary" onclick="display('sectionhomepage')" style="margin-top:40px;"><i class="fas fa-arrow-left"></i> Back to Home</button>
+    </div>
+  </div>
+  <style>
+    .overlay-bg {
+      position: relative;
+      z-index: 1;
+    }
+    .overlay-bg::before {
+      content: "";
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      z-index: -1;
+      background: url('https://st3.depositphotos.com/19060372/36495/v/600/depositphotos_364955698-stock-video-browsing-video-streaming-service-smartphone.jpg') center center/cover no-repeat;
+      opacity: 0.45;
+      pointer-events: none;
+    }
+    .category-title {
+      font-size: 1.5rem;
+      font-weight: 700;
+      letter-spacing: 1px;
+      margin-bottom: 18px;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-shadow: 0 2px 8px #000a;
+    }
+    .enhanced-movie-card {
+      gap: 25px;
+      justify-content: flex-start;
+    }
+    .enhanced-movie-img {
+      position: relative;
+      width: 200px;
+      height: 120px;
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 4px 18px 0 #000a;
+      transition: transform 0.25s cubic-bezier(.4,2,.6,1), box-shadow 0.25s;
+      border: 2px solid transparent;
+      cursor: pointer;
+      background-size: cover;
+      background-position: center;
+    }
+    .enhanced-movie-img:hover {
+      transform: scale(1.07) translateY(-6px);
+      border: 2px solid #e50914;
+      box-shadow: 0 8px 32px 0 #e5091440;
+      z-index: 2;
+    }
+    .movie-overlay {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: linear-gradient(to top, #141414ee 80%, transparent 100%);
+      color: #fff;
+      padding: 12px 14px 10px 14px;
+      opacity: 0.95;
+      transition: background 0.2s;
+      pointer-events: none;
+      min-height: 38px;
+      display: flex;
+      align-items: flex-end;
+    }
+    .movie-title-mini {
+      font-size: 1.08rem;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+      color: #fff;
+      text-shadow: 0 2px 8px #000a;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      width: 100%;
+    }
+    @media (max-width: 900px) {
+      .enhanced-movie-img {
+        width: 140px;
+        height: 90px;
+      }
+      .enhanced-movie-card {
+        gap: 14px;
+      }
+    }
+    @media (max-width: 600px) {
+      .enhanced-movie-img {
+        width: 100vw;
+        max-width: 98vw;
+        height: 140px;
+        margin: 0 auto;
+      }
+      .enhanced-movie-card {
+        flex-direction: column;
+        gap: 18px;
+      }
+      .category-title {
+        font-size: 1.1rem;
+      }
+    }
+  </style>
+
+  <!-- Detail Pages (hidden by default) -->
+  <div id="sectionwelcometoeden" style="display:none;">
+    <header>
+      <div class="img-logo"></div>
+      <button class="btn-primary" onclick="display('sectionnetflixdetailedpage')">Back</button>
+    </header>
+    <div class="section" style="background-image: url('https://wallpapercave.com/wp/wp9426680.jpg');">
+      <div class="overlay"></div>
+      <div class="content">
+        <h1 class="h1">N Series</h1>
+        <h1 class="movie-title">Welcome To Eden</h1>
+        <p class="passage">#Top in TV shows today!</p>
+        <p class="movie-description">A group of young adults attends an exclusive island party — but paradise soon turns into a trap with deadly secrets.</p>
+        <button class="info-button-1">Play</button>
+        <button class="info-button-2">More Info</button>
+        <div class="bottom-card">
+          <h1 class="h2">interface</h1>
+          <p class="h3">Mobile & TV/desktop</p>
+          <p class="p3">Customise the front page of netflix.</p>
+          <p class="p3">Available for phone or TV/desktop.</p>
+          <p class="p3">Links to download the fonts included.</p>
+        </div>
+      </div>
+    </div>
+    <div class="separator"></div>
+  </div>
+
+  <div id="sectionstrangerthings" style="display:none;">
+    <header>
+      <div class="img-logo"></div>
+      <button class="btn-primary" onclick="display('sectionnetflixdetailedpage')">Back</button>
+    </header>
+    <div class="section" style="background-image: url('https://wallpaperaccess.com/full/1669287.jpg');">
+      <div class="overlay"></div>
+      <div class="content">
+        <h1 class="h1">N Series</h1>
+        <h1 class="movie-title">Stranger Things 3</h1>
+        <p class="passage">#Top in TV shows today!</p>
+        <p class="movie-description">In the summer of 1985, evil returns to Hawkins just as new romances and old friendships are tested.</p>
+        <button class="info-button-1">Play</button>
+        <button class="info-button-2">More Info</button>
+        <div class="bottom-card">
+          <h1 class="h2">interface</h1>
+          <p class="h3">Mobile & TV/desktop</p>
+          <p class="p3">Customise the front page of netflix.</p>
+          <p class="p3">Available for phone or TV/desktop.</p>
+          <p class="p3">Links to download the fonts included.</p>
+        </div>
+      </div>
+    </div>
+    <div class="separator"></div>
+  </div>
+
+  <div id="sectionlucifer" style="display:none;">
+    <header>
+      <div class="img-logo"></div>
+      <button class="btn-primary" onclick="display('sectionnetflixdetailedpage')">Back</button>
+    </header>
+    <div class="section" style="background-image: url('https://wallpapercave.com/wp/wp2101068.jpg');">
+      <div class="overlay"></div>
+      <div class="content">
+        <h1 class="h1">N Series</h1>
+        <h1 class="movie-title">Lucifer</h1>
+        <p class="passage">#Top in TV shows today!</p>
+        <p class="movie-description">When the leader of a ruling party dies, a mysterious man steps in to fill the power vacuum.</p>
+        <button class="info-button-1">Play</button>
+        <button class="info-button-2">More Info</button>
+        <div class="bottom-card">
+          <h1 class="h2">interface</h1>
+          <p class="h3">Mobile & TV/desktop</p>
+          <p class="p3">Customise the front page of netflix.</p>
+          <p class="p3">Available for phone or TV/desktop.</p>
+          <p class="p3">Links to download the fonts included.</p>
+        </div>
+      </div>
+    </div>
+    <div class="separator"></div>
+  </div>
+
+  <div id="sectionthemarkedheart" style="display:none;">
+    <header>
+      <div class="img-logo"></div>
+      <button class="btn-primary" onclick="display('sectionnetflixdetailedpage')">Back</button>
+    </header>
+    <div class="section" style="background-image: url('https://wallpapercave.com/wp/wp9426636.jpg');">
+      <div class="overlay"></div>
+      <div class="content">
+        <h1 class="h1">N Series</h1>
+        <h1 class="movie-title">The Marked Heart</h1>
+        <p class="passage">#Top in TV shows today!</p>
+        <p class="movie-description">A man infiltrates an organ trafficking ring to uncover the truth behind his wife's murder and the woman who received her heart.</p>
+        <button class="info-button-1">Play</button>
+        <button class="info-button-2">More Info</button>
+        <div class="bottom-card">
+          <h1 class="h2">interface</h1>
+          <p class="h3">Mobile & TV/desktop</p>
+          <p class="p3">Customise the front page of netflix.</p>
+          <p class="p3">Available for phone or TV/desktop.</p>
+          <p class="p3">Links to download the fonts included.</p>
+        </div>
+      </div>
+    </div>
+    <div class="separator"></div>
+  </div>
+
+  <div id="sectionthesneakerella" style="display:none;">
+    <header>
+      <div class="img-logo"></div>
+      <button class="btn-primary" onclick="display('sectionnetflixdetailedpage')">Back</button>
+    </header>
+    <div class="section" style="background-image: url('https://images.livemint.com/img/2022/04/18/1600x900/Capture_1650264519873_1650264525555.JPG');">
+      <div class="overlay"></div>
+      <div class="content">
+        <h1 class="h1">N Series</h1>
+        <h1 class="movie-title">Sneakerella</h1>
+        <p class="passage">#Top in TV shows today!</p>
+        <p class="movie-description">Sneakerella is a modern Cinderella story where a young sneaker designer follows his dream in the streets of NYC.</p>
+        <button class="info-button-1">Play</button>
+        <button class="info-button-2">More Info</button>
+        <div class="bottom-card">
+          <h1 class="h2">interface</h1>
+          <p class="h3">Mobile & TV/desktop</p>
+          <p class="p3">Customise the front page of netflix.</p>
+          <p class="p3">Available for phone or TV/desktop.</p>
+          <p class="p3">Links to download the fonts included.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script type="text/javascript" src="https://d1tgh8fmlzexmh.cloudfront.net/ccbp-static-website/js/ccbp-ui-kit.js"></script>
+
+<footer style="background:rgba(0,0,0,0.85); color:#aaa; padding:40px 20px 20px 20px; text-align:center; font-size:15px;">
+  <div style="max-width:1200px; margin:0 auto;">
+    <div style="margin-bottom:30px;">
+      <h5 style="color:#fff; font-size:16px; text-align:center; margin-bottom:20px;">
+        Questions? Call <a href="tel:000-800-040-1843" style="color:#aaa;">000-800-040-1843</a>
+      </h5>
+    </div>
+    <div class="row" style="display:flex; flex-wrap:wrap; justify-content:center; gap:40px; margin-bottom:30px;">
+      <div>
+        <ul style="list-style:none; padding:0; margin:0;">
+          <li><a href="#" style="color:#aaa; text-decoration:none;">FAQ</a></li>
+          <li><a href="#" style="color:#aaa; text-decoration:none;">Help Centre</a></li>
+          <li><a href="#" style="color:#aaa; text-decoration:none;">Account</a></li>
+          <li><a href="#" style="color:#aaa; text-decoration:none;">Media Centre</a></li>
+        </ul>
+      </div>
+      <div>
+        <ul style="list-style:none; padding:0; margin:0;">
+          <li><a href="#" style="color:#aaa; text-decoration:none;">Investor Relations</a></li>
+          <li><a href="#" style="color:#aaa; text-decoration:none;">Jobs</a></li>
+          <li><a href="#" style="color:#aaa; text-decoration:none;">Ways to Watch</a></li>
+          <li><a href="#" style="color:#aaa; text-decoration:none;">Terms of Use</a></li>
+        </ul>
+      </div>
+      <div>
+        <ul style="list-style:none; padding:0; margin:0;">
+          <li><a href="#" style="color:#aaa; text-decoration:none;">Privacy</a></li>
+          <li><a href="#" style="color:#aaa; text-decoration:none;">Cookie Preferences</a></li>
+          <li><a href="#" style="color:#aaa; text-decoration:none;">Corporate Information</a></li>
+          <li><a href="#" style="color:#aaa; text-decoration:none;">Contact Us</a></li>
+        </ul>
+      </div>
+      <div>
+        <ul style="list-style:none; padding:0; margin:0;">
+          <li><a href="#" style="color:#aaa; text-decoration:none;">Speed Test</a></li>
+          <li><a href="#" style="color:#aaa; text-decoration:none;">Legal Notices</a></li>
+          <li><a href="#" style="color:#aaa; text-decoration:none;">Only on Netflix</a></li>
+        </ul>
+      </div>
+    </div>
+    <div style="margin:20px 0;">
+      <select style="background:#222; color:#aaa; border:1px solid #333; border-radius:2px; padding:6px 12px;">
+        <option>English</option>
+        <option>हिन्दी</option>
+      </select>
+    </div>
+    <div style="margin-top:30px; color:#666; font-size:14px;">
+      Netflix Clone &copy; 2025
+    </div>
+    <div style="margin-top:10px; color:#888; font-size:13px;">
+      Made by Siddharth Tarde and Vikrant Kulkarni
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
